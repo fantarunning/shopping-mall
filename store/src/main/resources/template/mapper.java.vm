@@ -1,0 +1,41 @@
+package $!{package.Mapper};
+
+import $!{package.Entity}.$!{entity};
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
+import $!{model}.query.$!{query};
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
+/**
+ * @author $!{author}
+ * @date $!{date}
+ * @description  $!{table.comment} Mapper 接口
+ */
+#if(${kotlin})
+interface $!{table.mapperName} : $!{superMapperClass}<$!{entity}>
+#else
+@Repository
+public interface $!{table.mapperName} extends $!{superMapperClass}<$!{entity}> {
+
+    IPage<$!{entity}> getWithPage(Page page, @Param("query") $!{query} query);
+
+    /**
+     * 新增后返回id
+     * @param po
+     * @return
+    */
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    Long insertReturnId(@Param("po") $!{entity} po);
+
+    int getCountByQuery(@Param("query") ${query} query);
+
+    $!{entity} getOneByQuery(@Param("query") ${query} query);
+
+    List<$!{entity}> getAllByQuery(@Param("query") ${query} query);
+
+}
+#end

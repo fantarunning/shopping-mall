@@ -2,7 +2,7 @@ package com.jk.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jk.dao.CommentmanageDao;
+import com.jk.mapper.CommentmanageDao;
 import com.jk.entity.Commentmanage;
 import com.jk.service.CommentmanageService;
 import org.springframework.stereotype.Service;

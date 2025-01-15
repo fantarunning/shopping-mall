@@ -2,7 +2,7 @@ package com.jk.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jk.dao.OrdermanageDao;
+import com.jk.mapper.OrdermanageDao;
 import com.jk.entity.Ordermanage;
 import com.jk.service.OrdermanageService;
 import org.springframework.stereotype.Service;

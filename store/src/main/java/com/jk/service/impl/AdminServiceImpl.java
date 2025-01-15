@@ -1,7 +1,7 @@
 package com.jk.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jk.dao.AdminDao;
+import com.jk.mapper.AdminDao;
 import com.jk.entity.Admin;
 import com.jk.service.AdminService;
 import org.springframework.stereotype.Service;

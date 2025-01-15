@@ -1,0 +1,174 @@
+package $!{package.Controller};
+
+import ${common}.model.${ApiResult};
+#if(${swagger2})
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
+#end
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import $!{package.Entity}.$!{entity};
+import $!{package.Service}.$!{table.serviceName};
+import $!{model}.dto.$!{dto};
+import $!{model}.vo.$!{vo};
+import $!{model}.query.$!{query};
+import $!{model}.convert.$!{convert};
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import $!{superControllerClassPackage};
+#end
+
+/**
+ * @author $!{author}
+ * @date $!{date}
+ * @description $!{table.comment}控制器
+ */
+#if(${swagger2})
+@Api(value = "$!{table.comment}", tags = "$!{table.comment}")
+#end
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("${table_name}")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : $!{superControllerClass}()#end
+#else
+#if(${superControllerClass})
+public class $!{table.controllerName} extends $!{superControllerClass} {
+#else
+public class $!{table.controllerName} {
+#end
+
+    @Autowired
+    private $!{table.serviceName} ${table_name}Service;
+
+
+    /**
+     * 获取$!{table.comment}分页列表
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "未完成，获取$!{table.comment}分页列表", notes = "获取$!{table.comment}分页列表")
+    @ApiImplicitParams({
+		    @ApiImplicitParam(name = "current", required = false, value = "当前页", paramType = "form"),
+		    @ApiImplicitParam(name = "size", required = false, value = "当前页大小", paramType = "form")
+    })
+    #end
+    @GetMapping(value = "/list/page")
+    public ${ApiResult}<IPage<$!{entity}>> list(#if(${swagger2}) @ApiIgnore #end $!{query} query,#if(${swagger2}) @ApiIgnore #end Page page) {
+        IPage<$!{entity}> resultPage = ${table_name}Service.getWithPage(page, query);
+        return ${ApiResult}.ok(resultPage);
+    }
+
+    /**
+     * 根据ID获取$!{table.comment}详情
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "未完成，根据ID获取$!{table.comment}详情", notes = "根据ID获取$!{table.comment}详情")
+    #end
+    @GetMapping("/get")
+    public ${ApiResult}<$!{vo}> get(@RequestParam("id") Long id) {
+        $!{entity} entity = ${table_name}Service.getById(id);
+        $!{vo} vo = $!{convert}.toVO(entity);
+        return ${ApiResult}.ok(vo);
+    }
+
+    /**
+     * 新增${table.comment}
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "未完成，新增${table.comment}", notes = "新增${table.comment}")
+
+    @ApiImplicitParams({
+        #foreach($field in ${table.fields})
+            #if(!${field.keyFlag})
+                #if(${foreach.count}==${table.fields.size()})
+                        @ApiImplicitParam(name = "${field.propertyName}", required = false, value = "${field.comment}", paramType = "form")
+                #else
+                        @ApiImplicitParam(name = "${field.propertyName}", required = false, value = "${field.comment}", paramType = "form"),
+                #end
+            #end
+        #end
+    })
+    #end
+    @PostMapping("/add")
+    public ${ApiResult}<String> add(#if(${swagger2}) @ApiIgnore #end @RequestBody $!{dto} dto) {
+        ${entity} po = ${bean}Convert.toPO(dto);
+        #if(${existDate})
+        po.${setCreateDate}(LocalDateTime.now());
+        po.${setUpdateDate}(LocalDateTime.now());
+        #end
+        boolean save = ${table_name}Service.save(po);
+        return save ? ${ApiResult}.ok() : ${ApiResult}.fail();
+    }
+
+    /**
+     *编辑${table.comment}
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "未完成，编辑${table.comment}", notes = "编辑${table.comment}")
+    @ApiImplicitParams({
+        #foreach($field in ${table.fields})
+            #if(${foreach.count}==${table.fields.size()})
+                    @ApiImplicitParam(name = "${field.propertyName}", required = false, value = "${field.comment}", paramType = "form")
+            #else
+                    @ApiImplicitParam(name = "${field.propertyName}", required = false, value = "${field.comment}", paramType = "form"),
+            #end
+        #end
+    })
+    #end
+    @PostMapping("/update")
+    public ${ApiResult} update(#if(${swagger2}) @ApiIgnore #end @RequestBody $!{dto} dto) {
+        ${entity} po = ${bean}Convert.toPO(dto);
+        #if(${existDate})
+        po.${setUpdateDate}(LocalDateTime.now());
+        #end
+        boolean update = ${table_name}Service.updateById(po);
+        return update ? ${ApiResult}.ok() : ${ApiResult}.fail();
+    }
+
+    /**
+     *移除${table.comment}
+     */
+     #if(${swagger2})
+    @ApiOperation(value = "未完成，移除$!{table.comment}", notes = "移除$!{table.comment}")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "id", required = true, value = "$!{table.comment}id", paramType = "form")
+    })
+    #end
+    @PostMapping("/remove")
+    public ${ApiResult}<String> remove(@RequestParam(value = "id") Long id) {
+        boolean remove = ${table_name}Service.removeById(id);
+        return remove ? ${ApiResult}.ok() : ${ApiResult}.fail();
+    }
+
+    /**
+     *批量移除${table.comment}
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "批量移除$!{table.comment}", notes = "批量移除$!{table.comment}")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "ids", required = true, value = "$!{table.comment}id,多个用,号隔开", paramType = "form")
+    })
+    #end
+    // @PostMapping("/batch/remove")
+    public ${ApiResult} batchRemove(@RequestParam(value = "ids") String ids) {
+        boolean remove = ${table_name}Service.removeByIds(Arrays.asList(ids.split(",")));
+        return remove ? ${ApiResult}.ok() : ${ApiResult}.fail();
+    }
+}
+#end

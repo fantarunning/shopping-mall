@@ -1,0 +1,59 @@
+package $!{model}.convert;
+
+
+import lombok.experimental.UtilityClass;
+import $!{package.Entity}.$!{entity};
+import ${model}.dto.$!{dto};
+import ${model}.vo.$!{vo};
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author $!{author}
+ * @date $!{date}
+ * @description $!{table.comment}转换类
+ */
+
+@UtilityClass
+public class $!{convert} {
+
+
+    public static $!{entity} toPO($!{dto} dto){
+        $!{entity} result = new $!{entity}();
+    #foreach($field in ${table.fields})
+            result.set${field.capitalName}(dto.get${field.capitalName}());
+    #end
+        return result;
+    }
+
+    public static $!{vo} toVO($!{entity} po){
+        $!{vo} result = new $!{vo}();
+        #foreach($field in ${table.fields})
+                result.set${field.capitalName}(po.get${field.capitalName}());
+        #end
+            return result;
+    }
+    public static List<$!{vo}> toVO(List<$!{entity}> pos){
+        if(pos == null){
+            return null;
+        }
+        List<$!{vo}> list = new ArrayList<>();
+        for($!{entity} po:pos){
+            list.add(toVO(po));
+        }
+        return list;
+    }
+
+    public static List<$!{entity}> toPO(List<$!{dto}> dtos){
+        if(dtos == null) {
+            return null;
+        }
+        List<$!{entity}> list = new ArrayList<>();
+        for($!{dto} dto:dtos) {
+            list.add(toPO(dto));
+        }
+        return list;
+    }
+
+
+}

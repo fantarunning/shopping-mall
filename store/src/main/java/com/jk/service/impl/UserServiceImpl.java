@@ -1,9 +1,8 @@
 package com.jk.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jk.dao.UserDao;
+import com.jk.mapper.UserDao;
 import com.jk.entity.User;
 import com.jk.service.UserService;
 

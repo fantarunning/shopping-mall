@@ -2,7 +2,7 @@ package com.jk.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jk.dao.PopularmanageDao;
+import com.jk.mapper.PopularmanageDao;
 import com.jk.entity.Popularmanage;
 import com.jk.service.PopularmanageService;
 import org.springframework.stereotype.Service;

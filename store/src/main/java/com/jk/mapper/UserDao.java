@@ -1,4 +1,4 @@
-package com.jk.dao;
+package com.jk.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jk.entity.User;

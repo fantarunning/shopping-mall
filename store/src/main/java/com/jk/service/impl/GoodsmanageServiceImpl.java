@@ -1,7 +1,7 @@
 package com.jk.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jk.dao.GoodsmanageDao;
+import com.jk.mapper.GoodsmanageDao;
 import com.jk.entity.Goodsmanage;
 import com.jk.service.GoodsmanageService;
 import org.springframework.stereotype.Service;
